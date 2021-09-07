@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import { Switch, Route, Redirect } from "react-router-dom";
+import About from "./components/About";
+import News from "./components/News";
+import Weather from "./components/Weather";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Switch>
+        <Route exact path="/">
+          {JSON.parse(localStorage.getItem("login")) === true ? (
+            <Home />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        <Route exact path="/about">
+          {JSON.parse(localStorage.getItem("login")) === true ? (
+            <About />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        <Route exact path="/news">
+          {JSON.parse(localStorage.getItem("login")) === true ? (
+            <News />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        <Route exact path="/weather">
+          {JSON.parse(localStorage.getItem("login")) === true ? (
+            <Weather />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+
+        <Route exact path="/login">
+          {!JSON.parse(localStorage.getItem("login")) === true ? (
+            <Login />
+          ) : (
+            <Redirect to="/" />
+          )}
+        </Route>
+      </Switch>
+    </>
   );
-}
+};
 
 export default App;
